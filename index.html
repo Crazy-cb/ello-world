@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CaiJun · 设计师</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#ffffff;--bg-alt:#f5f5f7;--text:#1d1d1f;--text-secondary:#6e6e73;--text-tertiary:#86868b;--accent:#0071e3;--border:rgba(0,0,0,.06);--radius:12px;--radius-lg:20px;--max-w:1200px}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;transition:all .4s}
+.nav.scrolled{background:rgba(255,255,255,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 32px}
+.nav-logo{font-size:17px;font-weight:600}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--text-secondary);transition:color .3s}
+.nav-links a:hover{color:var(--text)}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:120px 32px 80px;text-align:center}
+.hero-avatar{margin-bottom:32px}
+.hero-avatar svg{width:96px;height:96px;border-radius:50%;filter:drop-shadow(0 4px 20px rgba(0,0,0,.08))}
+.hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:12px}
+.hero h1 .light{font-weight:300;display:block;color:var(--text-secondary)}
+.hero-sub{font-size:clamp(17px,2vw,22px);color:var(--text-secondary);max-width:560px;line-height:1.6;margin-bottom:36px}
+.hero-cta{display:flex;gap:12px;justify-content:center}
+.btn{display:inline-flex;padding:12px 28px;border-radius:980px;font-size:14px;font-weight:500;transition:all .3s;cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#0077ed}
+.btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:#f5f5f7}
+.scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--text-tertiary);font-size:11px;letter-spacing:2px;animation:float 3s ease-in-out infinite}
+.scroll-hint .line{width:1px;height:32px;background:linear-gradient(to bottom,var(--text-tertiary),transparent)}
+@keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+
+/* Section */
+section{padding:100px 0}
+.section-inner{max-width:var(--max-w);margin:0 auto;padding:0 32px}
+.section-label{font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:8px}
+.section-title{font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:-.5px;line-height:1.2;margin-bottom:16px}
+
+/* Works - Horizontal Gallery */
+#works{padding:0;background:var(--bg-alt)}
+.works-header{padding:100px 32px 32px;max-width:var(--max-w);margin:0 auto}
+.gallery-wrap{padding:0 32px 80px;overflow:hidden}
+.gallery-scroll{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+.gallery-scroll::-webkit-scrollbar{height:4px}
+.gallery-scroll::-webkit-scrollbar-track{background:transparent}
+.gallery-scroll::-webkit-scrollbar-thumb{background:#c7c7cc;border-radius:4px}
+.g-card{flex:0 0 280px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;position:relative;scroll-snap-align:start;transition:transform .35s,box-shadow .35s;cursor:pointer}
+.g-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.12)}
+.g-card img{width:100%;height:100%;object-fit:cover}
+.g-card .c-overlay{position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(transparent 20%,rgba(0,0,0,.75))}
+.g-card .c-tag{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.g-card .c-title{font-size:16px;font-weight:600;color:#fff;margin-top:4px}
+
+/* About */
+#about{background:var(--bg)}
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:40px}
+.about-text p{font-size:16px;color:var(--text-secondary);line-height:1.8;margin-bottom:16px}
+.about-text .highlight{color:var(--text);font-weight:600}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.skill-item{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .25s}
+.skill-item:hover{background:#e8e8ed;transform:translateY(-2px)}
+.skill-item .icon{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px;color:#fff}
+.skill-item h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.skill-item p{font-size:12px;color:var(--text-tertiary)}
+
+/* Contact */
+#contact{background:var(--bg-alt)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px}
+.contact-card{display:flex;align-items:center;gap:14px;padding:20px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);transition:all .25s;cursor:pointer}
+.contact-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.contact-card .icon-box{width:40px;height:40px;border-radius:50%;background:var(--bg-alt);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:var(--text-secondary)}
+.contact-card .info h4{font-size:14px;font-weight:600;margin-bottom:1px}
+.contact-card .info p{font-size:13px;color:var(--text-tertiary)}
+footer{border-top:1px solid var(--border);padding:32px;text-align:center;font-size:13px;color:var(--text-tertiary)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+
+@media(max-width:768px){
+.nav{padding:14px 20px}.nav.scrolled{padding:10px 20px}.nav-links{gap:16px}.nav-links a{font-size:12px}
+.hero{padding:100px 20px 60px}
+.works-header{padding:60px 20px 20px}
+.gallery-wrap{padding:0 20px 60px}
+.g-card{flex:0 0 220px}
+section{padding:60px 0}
+.about-layout{grid-template-columns:1fr;gap:32px}
+.skills-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<nav class="nav" id="nav">
+  <div class="nav-logo">CaiJun</div>
+  <div class="nav-links">
+    <a href="#works">作品</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
+  </div>
+</nav>
+<section class="hero" id="hero">
+  <div class="hero-avatar reveal">
+    <svg viewBox="0 0 96 96" fill="none"><rect width="96" height="96" rx="48" fill="#e8e8ed"/><circle cx="48" cy="36" r="14" fill="#c7c7cc"/><ellipse cx="48" cy="72" rx="24" ry="14" fill="#c7c7cc"/></svg>
+  </div>
+  <h1 class="reveal reveal-d1"><span class="light">Hi, I'm</span> CaiJun</h1>
+  <p class="hero-sub reveal reveal-d2">视觉设计师 — 专注于品牌视觉与界面设计。<br>用简洁的设计语言创造有温度的数字体验。</p>
+  <div class="hero-cta reveal reveal-d3">
+    <a href="#works" class="btn btn-primary">查看作品</a>
+    <a href="#contact" class="btn btn-secondary">联系我</a>
+  </div>
+  <div class="scroll-hint"><span>向下滚动</span><div class="line"></div></div>
+</section>
+<section id="works">
+  <div class="works-header reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">精选作品</h2>
+  </div>
+  <div class="gallery-wrap">
+    <div class="gallery-scroll" id="galleryScroll">
+      <a class="g-card" href="#" onclick="return false">
+        <img src="华为闪屏-效果图.jpg" alt="华为 · 品牌闪屏" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Splash Screen</div>
+          <h3 class="c-title">华为 · 品牌闪屏</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="高达-马年.jpg" alt="高达 · 马年主题" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Theme Design</div>
+          <h3 class="c-title">高达 · 马年主题</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (21).jpg" alt="半屏视效系列" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">半屏视效系列</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (9).jpg" alt="美学半屏 · 光影" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">美学半屏 · 光影</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="1080-2160 (2).jpg" alt="全屏视觉 · 意境" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Full Screen</div>
+          <h3 class="c-title">全屏视觉 · 意境</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160-2 (4).jpg" alt="色彩构成系列" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">色彩构成系列</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="华为闪屏-效果图(1).jpg" alt="华为 · 几何美学" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Splash Screen</div>
+          <h3 class="c-title">华为 · 几何美学</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (41).jpg" alt="幻彩视界" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">幻彩视界</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (5).jpg" alt="极简构成" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">极简构成</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (36).jpg" alt="光之韵律" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">光之韵律</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (39).jpg" alt="数字花园" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">数字花园</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="华为闪屏-效果图 (2).jpg" alt="华为 · 科技美学" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Splash Screen</div>
+          <h3 class="c-title">华为 · 科技美学</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160 (37).jpg" alt="霓虹都市" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Static Screen</div>
+          <h3 class="c-title">霓虹都市</h3>
+        </div>
+      </a>
+      <a class="g-card" href="#" onclick="return false">
+        <img src="静态半屏1080-2160-2 (7).jpg" alt="流动形态" loading="lazy">
+        <div class="c-overlay">
+          <div class="c-tag">Visual Exp</div>
+          <h3 class="c-title">流动形态</h3>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label reveal">About</div>
+    <h2 class="section-title reveal reveal-d1">关于我</h2>
+    <div class="about-layout">
+      <div class="about-text reveal reveal-d2">
+        <p><span class="highlight">你好，我是 CaiJun</span> — 一名专注于品牌视觉与界面设计的创作者。</p>
+        <p>拥有丰富的移动端视觉设计经验，涵盖品牌闪屏、主题设计、半屏视效等领域。我相信好的设计不仅仅是好看，更要在细节中传递温度与思考。</p>
+        <p>目前活跃在视觉设计一线，持续探索设计与技术的边界。</p>
+      </div>
+      <div class="skills-grid reveal reveal-d3">
+        <div class="skill-item"><div class="icon">&#10022;</div><h4>UI / 视觉</h4><p>Figma · Sketch · PS</p></div>
+        <div class="skill-item"><div class="icon">&#9635;</div><h4>品牌设计</h4><p>LOGO · VI · 视觉系统</p></div>
+        <div class="skill-item"><div class="icon">&#9673;</div><h4>动效设计</h4><p>AE · Lottie</p></div>
+        <div class="skill-item"><div class="icon">&#9672;</div><h4>插画 / 图形</h4><p>Procreate · AI</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label reveal">Contact</div>
+    <h2 class="section-title reveal reveal-d1">联系我</h2>
+    <p class="section-desc reveal reveal-d2">如果有有趣的项目，欢迎联系。</p>
+    <div class="contact-grid">
+      <div class="contact-card reveal reveal-d1"><div class="icon-box">&#9993;</div><div class="info"><h4>Email</h4><p>caijun@design.me</p></div></div>
+      <div class="contact-card reveal reveal-d2"><div class="icon-box">&#9670;</div><div class="info"><h4>Behance</h4><p>behance.net/caijun</p></div></div>
+      <div class="contact-card reveal reveal-d3"><div class="icon-box">&#9675;</div><div class="info"><h4>站酷</h4><p>zcool.com.cn/caijun</p></div></div>
+      <div class="contact-card reveal reveal-d3"><div class="icon-box">&#9679;</div><div class="info"><h4>微信</h4><p>CaiJun_Design</p></div></div>
+    </div>
+  </div>
+</section>
+<footer><p>&copy; 2026 CaiJun</p></footer>
+<script>
+var nav = document.getElementById("nav");
+window.addEventListener("scroll", function() {
+  nav.classList.toggle("scrolled", window.scrollY > 40);
+}, {passive: true});
+
+var ro = new IntersectionObserver(function(e) {
+  e.forEach(function(i) { if (i.isIntersecting) i.target.classList.add("visible"); });
+}, {threshold: 0.1});
+document.querySelectorAll(".reveal").forEach(function(el) { ro.observe(el); });
+</script>
+</body>
+</html>
